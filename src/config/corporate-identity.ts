@@ -101,10 +101,10 @@ export const CORPORATE_IDENTITY: CorporateIdentityConfig = {
   },
 
   emails: {
-    generalInfo: process.env.NEXT_PUBLIC_EMAIL_INFO || "richardbejarano52@gmail.com",
-    sales: process.env.NEXT_PUBLIC_EMAIL_SALES || "richardbejarano52@gmail.com",
-    support: process.env.NEXT_PUBLIC_EMAIL_SUPPORT || "richardbejarano52@gmail.com",
-    legal: process.env.NEXT_PUBLIC_EMAIL_LEGAL || "richardbejarano52@gmail.com",
+    generalInfo: process.env.NEXT_PUBLIC_EMAIL_INFO || "usapujamotor@gmail.com",
+    sales: process.env.NEXT_PUBLIC_EMAIL_SALES || "usapujamotor@gmail.com",
+    support: process.env.NEXT_PUBLIC_EMAIL_SUPPORT || "usapujamotor@gmail.com",
+    legal: process.env.NEXT_PUBLIC_EMAIL_LEGAL || "usapujamotor@gmail.com",
   },
 
   businessHours: {

@@ -288,3 +288,4 @@ export const FALLBACK_REAL_LOTS = [
     ],
   },
 ];
+
