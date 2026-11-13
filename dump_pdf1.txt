@@ -1,0 +1,406 @@
+PDF: Generar-dinero-haciendo-caso.pdf (Total pages: 12)
+
+=== PAGE 1 ===
+MAPA BROKERS · PROCESO COMERCIAL
+Generar dinero
+haciendo caso
+Instructivo paso a paso para asesores. Si sigues cada paso al pie de la letra
+y respetas sus no negociables, el proceso te lleva hasta la venta.
+CÓMO USAR ESTE INSTRUCTIVO
+•
+Haz los pasos en orden. No te saltes ninguno.
+•
+Cada paso dice cuándo entras y cuándo pasas al siguiente. Si no se cumple esa
+condición, no avanzas.
+•
+Los no negociables se cumplen siempre, sin excepción.
+LOS 8 PASOS
+#
+Paso
+Pasa al siguiente cuando…
+1
+Saludo inicial
+La persona dice que quiere o necesita un vehículo
+2
+Datos de búsqueda
+Tienes vehículo, año y presupuesto
+3
+Búsqueda y envío de vehículos
+La persona escoge uno de los vehículos
+4
+Contrato
+El contrato está firmado
+5
+Montar la oferta en Copart
+Le avisas al cliente que la oferta está montada
+6
+Acompañamiento en la subasta en
+vivo
+Termina la subasta
+7
+Cierre de la subasta
+Tienes el pantallazo de "Venta finalizada"
+8
+Correo de subasta ganada
+—
+
+
+=== PAGE 2 ===
+Mapa Brokers · Generar dinero haciendo caso
+2
+PASO 1
+Saludo inicial
+Entra cuando
+Recibes un contacto nuevo en WhatsApp.
+Pasa al siguiente paso
+cuando
+La persona dice que quiere buscar un vehículo o que necesita un vehículo.
+OBJETIVO
+Abrir la conversación presentándote como broker especialista.
+QUÉ HACE EL ASESOR
+Envía este saludo, exactamente así:
+“Hola, mucho gusto, mi nombre es [tu nombre]. Soy broker especialista en venta de
+vehículos por Copart. ¿Cómo le puedo ayudar el día de hoy?”
+SI LA PERSONA NO CONTESTA
+No se insiste. Se deja ahí y sigues con tus demás contactos.
+NO NEGOCIABLES
+•
+Siempre saludas primero, sin importar lo que diga o pregunte la persona.
+•
+No respondes ninguna pregunta antes del saludo: ni precio, ni carro, ni proceso.
+•
+El saludo se envía tal cual, sin cambiar palabras.
+
+
+=== PAGE 3 ===
+Mapa Brokers · Generar dinero haciendo caso
+3
+PASO 2
+Datos de búsqueda
+Entra cuando
+La persona dice que quiere o necesita un vehículo.
+Pasa al siguiente paso
+cuando
+Tienes los tres datos.
+OBJETIVO
+Saber exactamente qué vehículo busca la persona.
+QUÉ HACE EL ASESOR
+Le pide a la persona tres datos:
+1.
+Qué vehículo está buscando.
+2.
+Desde qué año lo busca.
+3.
+Con qué presupuesto.
+NO NEGOCIABLES
+•
+No se envían vehículos hasta tener los tres datos: vehículo, año y presupuesto.
+
+
+=== PAGE 4 ===
+Mapa Brokers · Generar dinero haciendo caso
+4
+PASO 3
+Búsqueda y envío de vehículos
+Entra cuando
+Tienes vehículo, año y presupuesto.
+Pasa al siguiente paso
+cuando
+La persona escoge uno de los vehículos que le enviaste.
+OBJETIVO
+Enviarle a la persona opciones reales de Copart que encajen con lo que pidió, cada una con su
+precio ofertado.
+QUÉ HACE EL ASESOR: BÚSQUEDA EN COPART
+1.
+En el buscador escribe la referencia del vehículo.
+2.
+Filtra Run and Drive (prende y anda).
+3.
+Filtra Clean Title (título limpio).
+4.
+Filtra el año.
+5.
+Ordena por fecha de la subasta.
+6.
+Escoge los vehículos que más se acerquen al perfil del vehículo ideal.
+Imagen de referencia: (1) Run and Drive, (2) Clean Title, (3) ordenar por fecha de la subasta.
+QUÉ HACE EL ASESOR: ENVÍO
+•
+Envía mínimo 4 vehículos.
+•
+Cada vehículo va como link directo de Copart.
+
+
+=== PAGE 5 ===
+Mapa Brokers · Generar dinero haciendo caso
+5
+•
+Debajo de cada link pone el precio ofertado, calculado con la regla de este paso.
+PERFIL DEL VEHÍCULO IDEAL
+•
+Menos de 100,000 millas.
+•
+Vehículo limpio, con fotos buenas donde se vea el detalle.
+•
+Precio ofertado por debajo del presupuesto del cliente.
+•
+Que tenga valor comercial: el "Valor minorista estimado" que muestra Copart en la
+ficha.
+Si no hay vehículos con menos de 100,000 millas, igual se envían opciones.
+REGLA DEL PRECIO OFERTADO
+La oferta que pones debajo de cada link se calcula así:
+Si el carro muestra…
+La oferta va entre…
+Valor minorista estimado
+40% y 60% de ese valor
+Precio de compra inmediata
+60% y 75% de ese precio
+TABLA DE REFERENCIA: CON VALOR MINORISTA
+Valor minorista
+Oferta mínima (40%)
+Oferta máxima (60%)
+$8,000
+$3,200
+$4,800
+$12,000
+$4,800
+$7,200
+$18,000
+$7,200
+$10,800
+$25,000
+$10,000
+$15,000
+$37,500
+$15,000
+$22,500
+$50,000
+$20,000
+$30,000
+TABLA DE REFERENCIA: CON COMPRA INMEDIATA
+Compra inmediata
+Oferta mínima (60%)
+Oferta máxima (75%)
+$5,000
+$3,000
+$3,750
+$10,000
+$6,000
+$7,500
+$15,500
+$9,300
+$11,625
+$20,000
+$12,000
+$15,000
+$30,000
+$18,000
+$22,500
+$40,000
+$24,000
+$30,000
+
+
+=== PAGE 6 ===
+Mapa Brokers · Generar dinero haciendo caso
+6
+SI EL CARRO NO MUESTRA NINGÚN VALOR
+1.
+Busca en la misma búsqueda carros parecidos (misma referencia, año cercano y millaje
+parecido) que sí muestren valor minorista o compra inmediata.
+2.
+Toma ese valor como referencia.
+3.
+Aplica el mismo porcentaje de las tablas.
+Ejemplo ilustrativo: un Civic 2021 sin valor visible. En la misma búsqueda aparece otro Civic 2021 con compra
+inmediata de $10,500. Con el 60% a 75%, la oferta va entre $6,300 y $7,875.
+EJEMPLOS REALES DE OFERTA IDEAL
+Vehículo
+Datos en Copart
+Oferta ideal
+2023 Toyota Tacoma SR
+V6
+Lote 69608156
+Título limpio · Run and Drive · 41,429 millas · Valor
+minorista $37,527
+$16,000 a
+$18,000
+2019 Honda Civic EX
+Lote 66244506
+Título limpio · Run and Drive · 59,663 millas · Valor
+minorista $18,675 · Compra inmediata $15,500
+$10,300 a
+$10,400
+NO NEGOCIABLES
+•
+Nunca menos de 4 vehículos.
+•
+Siempre título limpio y Run and Drive.
+•
+El precio ofertado nunca supera el presupuesto que dio la persona.
+•
+Nunca se deja a la persona sin opciones: si no hay vehículos con menos de 100,000
+millas, igual se envían.
+
+
+=== PAGE 7 ===
+Mapa Brokers · Generar dinero haciendo caso
+7
+PASO 4
+Contrato
+Entra cuando
+La persona escoge uno de los vehículos que le enviaste.
+Pasa al siguiente paso
+cuando
+El contrato está firmado.
+OBJETIVO
+Que la persona entienda y firme el contrato que se carga en Copart para dejar la oferta en pie.
+QUÉ HACE EL ASESOR
+1.
+Pide la licencia de conducción o el pasaporte de la persona.
+2.
+Arma el contrato.
+3.
+Le explica a la persona los 4 puntos del contrato (ver tabla).
+4.
+Le explica que el contrato se carga en el sistema de Copart, y con eso la oferta
+queda en pie.
+5.
+Le explica que el fee de la comisión solo se paga cuando reciba el vehículo.
+#
+Qué lleva el contrato
+1
+Información del comprador.
+2
+Información del vehículo.
+3
+Fee de comisión de Mapa Brokers: entre $200 y $500.
+4
+Autorización del comprador, con el monto que se va a ofertar en Copart.
+NO NEGOCIABLES
+•
+Sin licencia de conducción o pasaporte no se arma el contrato.
+•
+Siempre se explican los 4 puntos del contrato antes de enviarlo.
+•
+Siempre se explica que el contrato se carga en el sistema de Copart.
+•
+Siempre se explica que el fee solo se paga cuando el cliente reciba el vehículo.
+•
+El fee siempre está entre $200 y $500.
+
+
+=== PAGE 8 ===
+Mapa Brokers · Generar dinero haciendo caso
+8
+PASO 5
+Montar la oferta en Copart
+Entra cuando
+El contrato está firmado.
+Pasa al siguiente paso
+cuando
+Le avisas al cliente que la oferta ya está montada.
+OBJETIVO
+Dejar la oferta montada en Copart y que el cliente lo sepa.
+QUÉ HACE EL ASESOR
+1.
+Le dice al cliente que montar la oferta en el sistema de Copart toma unas 2 o 3 horas.
+2.
+Monta la oferta en Copart con el contrato firmado.
+3.
+Le avisa al cliente que la oferta ya quedó montada.
+NO NEGOCIABLES
+•
+Siempre se le dice al cliente el tiempo de 2 a 3 horas antes de empezar.
+•
+Siempre se le avisa al cliente cuando la oferta ya está montada. Nunca se deja al cliente
+sin ese aviso.
+
+
+=== PAGE 9 ===
+Mapa Brokers · Generar dinero haciendo caso
+9
+PASO 6
+Acompañamiento en la subasta en vivo
+Entra cuando
+Ya le avisaste al cliente que la oferta está montada.
+Pasa al siguiente paso
+cuando
+Termina la subasta.
+OBJETIVO
+Que el cliente vea que su vehículo está en la subasta en vivo.
+QUÉ HACE EL ASESOR
+1.
+Unas 2 horas antes de la subasta entra a Copart con su usuario.
+2.
+Abre el link del vehículo.
+3.
+Da clic en "Sumarse a subasta en vivo" (imagen 1).
+4.
+Ubica el vehículo del cliente en "Próximos lotes", donde se ven los minutos que faltan.
+5.
+Revisa la puja actual: nunca puede estar por encima de la oferta que vamos a hacer.
+6.
+Toma el pantallazo (imagen 2) y se lo envía al cliente avisándole que su vehículo ya está
+en la subasta.
+Imagen 1 (solo guía para el asesor): botón "Sumarse a subasta en vivo" en la ficha del vehículo.
+
+
+=== PAGE 10 ===
+Mapa Brokers · Generar dinero haciendo caso
+10
+Imagen 2 (la que se envía al cliente): el vehículo en "Próximos lotes" y los minutos que faltan.
+NO NEGOCIABLES
+•
+Al cliente solo se le envía el pantallazo de adentro de la subasta en vivo, donde se ven el
+vehículo y los minutos que faltan.
+•
+Antes de enviar el pantallazo se revisa la puja actual. La puja actual nunca puede estar
+por encima de la oferta que vamos a hacer.
+
+
+=== PAGE 11 ===
+Mapa Brokers · Generar dinero haciendo caso
+11
+PASO 7
+Cierre de la subasta
+Entra cuando
+El vehículo pasa por la subasta en vivo.
+Pasa al siguiente paso
+cuando
+Tienes el pantallazo de "Venta finalizada".
+OBJETIVO
+Que el cliente vea el resultado de la subasta.
+QUÉ HACE EL ASESOR
+1.
+Espera a que el vehículo pase por la subasta.
+2.
+Toma el pantallazo donde aparece "Venta finalizada".
+3.
+Se lo envía al cliente.
+Imagen de referencia: en la ficha del vehículo debe aparecer "Venta finalizada".
+NO NEGOCIABLES
+•
+Siempre se envía el pantallazo de "Venta finalizada". Nunca se da el resultado solo por
+mensaje.
+•
+Sin pantallazo de "Venta finalizada" no se envía el correo del Paso 8.
+
+
+=== PAGE 12 ===
+Mapa Brokers · Generar dinero haciendo caso
+12
+PASO 8
+Correo de subasta ganada
+Entra cuando
+Tienes el pantallazo de "Venta finalizada".
+OBJETIVO
+Notificarle a la persona que ganó la subasta.
+QUÉ HACE EL ASESOR
+Unos 30 minutos después de terminar la subasta, envía el correo electrónico notificándole
+a la persona que ganó la subasta.
+NO NEGOCIABLES
+•
+El correo solo se envía si existe el pantallazo de "Venta finalizada".
+
+

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bg_pm_heavy" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#080c14"/>
+      <stop offset="60%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#141c2c"/>
+    </linearGradient>
+    <pattern id="grid_pm_heavy" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#1e293b" stroke-width="0.7" stroke-dasharray="2,2"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg_pm_heavy)"/>
+  <rect width="800" height="500" fill="url(#grid_pm_heavy)"/>
+  
+  <!-- Header Badge PUJAMOTOR USA -->
+  <rect x="30" y="25" width="460" height="34" rx="6" fill="#0b1b2b" stroke="#00F2FE" stroke-width="1.2"/>
+  <circle cx="48" cy="42" r="5" fill="#00F2FE"/>
+  <text x="62" y="47" fill="#E2E8F0" font-family="monospace" font-size="12" font-weight="bold" letter-spacing="1">PUJAMOTOR USA // FICHA TÉCNICA — CAMIONETAS FULL-SIZE</text>
+  
+  <!-- Silhouette: Full-Size SUV / Heavy Truck (Tahoe / Expedition profile) -->
+  <g transform="translate(85, 135)" stroke="#00F2FE" stroke-width="2.5" fill="#080e18" fill-opacity="0.9">
+    <!-- Massive Square-body Full-Size SUV Outline -->
+    <path d="M35,165 L35,100 L140,95 L200,32 L565,32 C585,32 595,45 600,65 L600,165 Z"/>
+    
+    <!-- Heavy Tint Windows with 3 Rows -->
+    <path d="M210,42 L310,42 L310,90 L160,90 Z" fill="#132337" stroke="#38BDF8" stroke-width="1.5"/>
+    <path d="M322,42 L425,42 L425,90 L322,90 Z" fill="#132337" stroke="#38BDF8" stroke-width="1.5"/>
+    <path d="M437,42 L550,42 L570,90 L437,90 Z" fill="#132337" stroke="#38BDF8" stroke-width="1.5"/>
+    
+    <!-- 20-inch Heavy Wheels -->
+    <circle cx="150" cy="172" r="46" fill="#06090e" stroke="#00F2FE" stroke-width="3"/>
+    <circle cx="150" cy="172" r="30" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+    <rect x="140" y="152" width="8" height="20" rx="2" fill="#FF7A00" stroke="none"/>
+    <circle cx="150" cy="172" r="14" fill="#00F2FE"/>
+    
+    <circle cx="505" cy="172" r="46" fill="#06090e" stroke="#00F2FE" stroke-width="3"/>
+    <circle cx="505" cy="172" r="30" fill="#1e293b" stroke="#64748b" stroke-width="1.5"/>
+    <rect x="495" y="152" width="8" height="20" rx="2" fill="#FF7A00" stroke="none"/>
+    <circle cx="505" cy="172" r="14" fill="#00F2FE"/>
+  </g>
+
+  <!-- Towing / Heavy Duty Callout -->
+  <line x1="585" y1="250" x2="650" y2="200" stroke="#FF7A00" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <circle cx="585" cy="250" r="4" fill="#FF7A00"/>
+  <rect x="615" y="185" width="155" height="24" rx="4" fill="#1e1810" stroke="#FF7A00" stroke-width="1"/>
+  <text x="625" y="201" fill="#FFB775" font-family="monospace" font-size="10" font-weight="bold">ENGANCHE REMOLQUE CLASE IV</text>
+
+  <!-- Footer Legal Watermark -->
+  <rect x="30" y="435" width="740" height="40" rx="6" fill="#06090e" stroke="#1e293b"/>
+  <text x="45" y="460" fill="#94A3B8" font-family="monospace" font-size="11">ORIGEN DE IMAGEN: ACTIVO TÉCNICO AUTORIZADO PUJAMOTOR USA (INSPECCIÓN VISUAL HOMOLOGADA)</text>
+</svg>

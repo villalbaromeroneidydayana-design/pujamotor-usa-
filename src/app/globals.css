@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-zinc-950 text-zinc-100 antialiased selection:bg-cyan-500 selection:text-zinc-950;
+}
+
+/* Scrollbar técnico sobrio grafito */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #090d16;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Manejo de Impresión Oficial y Protección de Confidencialidad */
+@media print {
+  /* Cuando no es un documento oficial printable-document, proteger con advertencia interna */
+  body:not(:has(.printable-document))::before {
+    content: "DOCUMENTO CONFIDENCIAL Y PRIVADO DE PUJAMOTOR USA — PROHIBIDA SU DISTRIBUCIÓN EXTERNA NO AUTORIZADA.";
+    display: block;
+    font-size: 14pt;
+    font-weight: bold;
+    color: red;
+    text-align: center;
+    border: 2px solid red;
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+
+  /* Cuando se imprime un documento oficial del Centro Documental */
+  body:has(.printable-document) {
+    background: #ffffff !important;
+    color: #111827 !important;
+  }
+
+  body:has(.printable-document) * {
+    visibility: hidden;
+  }
+
+  body:has(.printable-document) .printable-document,
+  body:has(.printable-document) .printable-document * {
+    visibility: visible;
+  }
+
+  body:has(.printable-document) .printable-document {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 20mm !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}
+
+

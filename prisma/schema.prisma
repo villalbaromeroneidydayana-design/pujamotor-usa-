@@ -1,0 +1,417 @@
+// ============================================================================
+// AUTOS USA — ESQUEMA DE BASE DE DATOS RELACIONAL INTEGRAL (Desarrollo Local / SQLite)
+// Para despliegue en PostgreSQL, usar prisma/schema.postgresql.prisma
+// ============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// 1. FUENTES DE INFORMACIÓN Y LOTES DE INGESTA
+model DataSource {
+  id              String           @id @default(cuid())
+  code            String           @unique // COPART_CSV_MEMBER, COPART_B2B_API, NHTSA_VPIC_OFFICIAL, MANUAL_VERIFIED, DEMO_SANDBOX_GENERATOR
+  name            String
+  integrationType String           // CSV_FEED, REST_API, MANUAL, SANDBOX
+  description     String?
+  isAuthorized    Boolean          @default(true)
+  isActive        Boolean          @default(true)
+  requiresAuth    Boolean          @default(false)
+  lastSyncAt      DateTime?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  ingestionBatches IngestionBatch[]
+  auctionLots      AuctionLot[]
+}
+
+model IngestionBatch {
+  id                String      @id @default(cuid())
+  dataSourceId      String
+  dataSource        DataSource  @relation(fields: [dataSourceId], references: [id])
+  fileName          String?
+  fileHashSha256    String?
+  totalRecords      Int         @default(0)
+  processedRecords  Int         @default(0)
+  createdRecords    Int         @default(0)
+  updatedRecords    Int         @default(0)
+  incompleteRecords Int         @default(0)
+  failedRecords     Int         @default(0)
+  status            String      // RUNNING, COMPLETED, COMPLETED_WITH_WARNINGS, FAILED
+  errorSummaryJson  String?     // JSON array de errores de validación por fila
+  triggeredByUserId String?
+  startedAt         DateTime    @default(now())
+  completedAt       DateTime?
+
+  auctionLots       AuctionLot[]
+}
+
+// 2. MOTOR CENTRAL DE VEHÍCULOS Y LOTES DE SUBASTA
+model Vehicle {
+  id              String       @id @default(cuid())
+  internalCode    String       @unique // Ej. AUTOS-USA-2026-0001
+  vin             String?      // Nullable cuando no esté legítimamente disponible
+  isVinMasked     Boolean      @default(false)
+  vinDecodedByNhtsa Boolean    @default(false)
+  make            String
+  model           String
+  trim            String?
+  year            Int
+  bodyStyle       String?      // SUV, Pickup, Sedan, Coupe, Hatchback, Van
+  engineSpec      String?      // Ej. 3.5L V6 EcoBoost, 2.5L I4 Hybrid
+  cylinders       Int?
+  transmission    String?      // Automatic, Manual, CVT
+  drivetrain      String?      // 4WD, AWD, FWD, RWD
+  fuelType        String?      // Gasoline, Hybrid, Electric, Diesel
+  exteriorColor   String?
+  interiorColor   String?
+  manufacturedIn  String?      // Planta de fabricación (vía NHTSA)
+  dataEnvironment String       @default("PRODUCTION_REAL") // PRODUCTION_REAL | DEMO_SANDBOX
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  auctionLots     AuctionLot[]
+
+  @@index([make, model, year])
+  @@index([dataEnvironment])
+}
+
+model AuctionLot {
+  id                   String               @id @default(cuid())
+  vehicleId            String
+  vehicle              Vehicle              @relation(fields: [vehicleId], references: [id], onDelete: Cascade)
+  dataSourceId         String
+  dataSource           DataSource           @relation(fields: [dataSourceId], references: [id])
+  lastBatchId          String?
+  lastBatch            IngestionBatch?      @relation(fields: [lastBatchId], references: [id])
+
+  lotNumber            String               @unique // Número de lote en Copart / Subasta
+  auctionHouse         String               @default("COPART") // COPART | OTHER_AUTHORIZED
+  yardName             String               // Ej. TX - HOUSTON, FL - MIAMI CENTRAL
+  yardState            String               // TX, FL, CA, GA, NJ, etc.
+  yardCity             String
+  yardZip              String?
+
+  odometerValue        Int?                 // Lectura en millas/km (null si no disponible)
+  odometerUnit         String               @default("MILES") // MILES | KM
+  odometerBrand        String               @default("ACTUAL") // ACTUAL, EXEMPT, NOT_ACTUAL, INOPERABLE
+
+  titleCode            String?              // Ej. TX - CERT OF TITLE-SALVAGE, FL - CERTIFICATE OF DESTRUCTION
+  titleCategory        String               // CLEAN, SALVAGE, REBUILT, EXPORT_ONLY, NON_REPAIRABLE, PENDING
+  primaryDamage        String               // Front End, Rear End, Side, Minor Dents/Scratches, Hail, Mechanical, Water/Flood
+  secondaryDamage      String?
+  damageNotes          String?
+  runAndDriveStatus    String               // RUNS_AND_DRIVES, ENGINE_START_PROGRAM, ENHANCED, STATIONARY, UNKNOWN
+  hasKeys              Boolean?             // null si aún no confirmado
+
+  estimatedRetailValue Float?               // ACV (Actual Cash Value) estimado en EE. UU.
+  repairCostEstimate   Float?               // Costo estimado de reparación reportado en lote
+  currentBidUsd        Float                @default(0)
+  buyItNowPriceUsd     Float?               // Precio compra inmediata cuando esté disponible
+  minBidIncrementUsd   Float                @default(100)
+  currency             String               @default("USD")
+  sellerType           String?              // Insurance, Fleet/Lease, Dealer, Financial Institution
+  requiresBrokerLicense Boolean             @default(true) // Indica si el estado/título exige licencia o broker
+
+  auctionDate          DateTime?            // Fecha de subasta programada (null si Future/TBD)
+  saleStatus           String               @default("UPCOMING") // UPCOMING, LIVE_AUCTION, ON_APPROVAL, BUY_IT_NOW_AVAILABLE, SOLD, ARCHIVED
+  availabilityStatus   String               @default("AVAILABLE") // AVAILABLE, RESERVED_IN_ADVISORY, SOLD_EXTERNAL, UNAVAILABLE
+
+  // Control estricto de calidad e integridad de datos
+  completenessStatus   String               @default("CONFIRMED") // CONFIRMED | PENDING_VERIFICATION | INCOMPLETE
+  missingFieldsJson    String               @default("[]")        // JSON array con campos pendientes
+  verificationNotes    String?
+  isPublished          Boolean              @default(true)
+  dataEnvironment      String               @default("PRODUCTION_REAL") // PRODUCTION_REAL | DEMO_SANDBOX
+
+  sourceQueriedAt      DateTime             @default(now()) // Fecha exacta de consulta de la fuente
+  createdAt            DateTime             @default(now())
+  updatedAt            DateTime             @updatedAt
+
+  changeHistory        LotChangeHistory[]
+  media                VehicleMedia[]
+  documents            VehicleDocument[]
+  costEstimates        CostEstimate[]
+  quoteRequests        QuoteRequest[]
+  advisoryCases        AdvisoryCase[]
+
+  @@index([lotNumber])
+  @@index([yardState, saleStatus])
+  @@index([completenessStatus, dataEnvironment, isPublished])
+  @@index([currentBidUsd])
+}
+
+model LotChangeHistory {
+  id                 String     @id @default(cuid())
+  auctionLotId       String
+  auctionLot         AuctionLot @relation(fields: [auctionLotId], references: [id], onDelete: Cascade)
+  changedByUserId    String?
+  changedByUser      User?      @relation(fields: [changedByUserId], references: [id])
+  changeSource       String     // CSV_SYNC, B2B_API_SYNC, ADMIN_MANUAL_UPDATE, NHTSA_ENRICHMENT
+  summary            String     // Resumen legible del cambio
+  changedFieldsJson  String     // JSON array de nombres de campos modificados
+  previousValuesJson String     // JSON object con valores anteriores
+  newValuesJson      String     // JSON object con valores nuevos
+  createdAt          DateTime   @default(now())
+
+  @@index([auctionLotId, createdAt])
+}
+
+model VehicleMedia {
+  id                String     @id @default(cuid())
+  auctionLotId      String
+  auctionLot        AuctionLot @relation(fields: [auctionLotId], references: [id], onDelete: Cascade)
+  mediaType         String     @default("PHOTO_EXTERIOR") // PHOTO_EXTERIOR, PHOTO_INTERIOR, PHOTO_ENGINE, PHOTO_DAMAGE, PHOTO_VIN
+  title             String
+  url               String     // Ruta local o almacenamiento S3 autorizado
+  originReference   String     // Referencia documental de autorización (ej. "Inspección autorizada en patio", "SVG esquemático propio", "Licencia B2B")
+  isAuthorizedCopy  Boolean    @default(true)
+  sortOrder         Int        @default(0)
+  isPrimary         Boolean    @default(false)
+  createdAt         DateTime   @default(now())
+}
+
+model VehicleDocument {
+  id                String     @id @default(cuid())
+  auctionLotId      String
+  auctionLot        AuctionLot @relation(fields: [auctionLotId], references: [id], onDelete: Cascade)
+  docType           String     // CONDITION_REPORT, TITLE_PREVIEW, NHTSA_SPEC_SHEET, EXPORT_CHECKLIST
+  title             String
+  storagePath       String
+  isVerified        Boolean    @default(true)
+  uploadedByUserId  String?
+  createdAt         DateTime   @default(now())
+}
+
+// 3. CALCULADORA DE COSTOS PARAMETRIZABLE
+model TariffRuleSet {
+  id                          String         @id @default(cuid())
+  versionCode                 String         @unique // Ej. TARIFARIO-2026-V1
+  name                        String
+  description                 String?
+  isActive                    Boolean        @default(true)
+  // Estructuras JSON tipadas con Zod en aplicación para máxima flexibilidad de tramos
+  auctionFeeScheduleJson      String         // Tramos de Buyer Fee, Virtual Bid Fee, Gate Fee, Env Fee
+  brokerFeeRulesJson          String         // Porcentaje, tarifa mínima y exenciones de Broker
+  inlandTransportMatrixJson   String         // Tarifas de grúa por Estado de EE. UU. y puerto de salida
+  oceanFreightRatesJson       String         // Tarifas marítimas por Puerto EE. UU. -> País/Puerto Destino y tipo de vehículo
+  destinationCustomsRulesJson String         // Reglas de Arancel %, IVA %, tasas portuarias y gastos de documentación por país
+  effectiveFrom               DateTime       @default(now())
+  updatedByUserId             String?
+  createdAt                   DateTime       @default(now())
+  updatedAt                   DateTime       @updatedAt
+
+  costEstimates               CostEstimate[]
+}
+
+model CostEstimate {
+  id                      String        @id @default(cuid())
+  simulationCode          String        @unique // SIM-2026-XXXX
+  auctionLotId            String?
+  auctionLot              AuctionLot?   @relation(fields: [auctionLotId], references: [id], onDelete: SetNull)
+  tariffRuleSetId         String
+  tariffRuleSet           TariffRuleSet @relation(fields: [tariffRuleSetId], references: [id])
+
+  vehicleSummary          String        // Ej. "2022 Ford F-150 XLT (Lote #74829104)" o "Simulación Libre SUV/Pickup"
+  originState             String        // TX, FL, CA, GA, NJ, etc.
+  departurePort           String        // Houston, Miami, Savannah, Newark, Los Angeles
+  destinationCountryCode  String        // MX, CO, CL, DO, GT, CR, PE, HN, SV
+  destinationCountryName  String
+  destinationPort         String
+  shippingModality        String        @default("RORO") // RORO | CONTAINER_SHARED
+
+  bidAmountUsd            Float         // Precio de compra base
+  auctionBuyerFeeUsd      Float         // Tarifa de comprador de subasta
+  auctionVirtualBidFeeUsd Float         // Tarifa de puja en línea
+  auctionGateAndEnvFeeUsd Float         // Gate fee + Environmental fee + Title mailing fee
+  brokerFeeUsd            Float         // Tarifa del intermediario / licencia cuando corresponda
+  inlandTransportUsd      Float         // Transporte terrestre interno (grúa en EE. UU.)
+  oceanFreightUsd         Float         // Transporte marítimo internacional
+  marineInsuranceUsd      Float         // Seguro marítimo estimado
+  documentationFeesUsd    Float         // Gastos de documentación (BL, SED/AES, despacho exportación)
+  customsDutyUsd          Float         // Arancel de importación según destino
+  importVatAndTaxesUsd    Float         // IVA e impuestos internos según destino
+  additionalCostsUsd      Float         @default(0) // Costos adicionales personalizables
+  additionalCostsNote     String?
+  totalEstimatedUsd       Float         // Total general estimado en USD
+
+  isBindingQuote          Boolean       @default(false) // SIEMPRE false en simulaciones automáticas
+  disclaimerText          String
+  createdAt               DateTime      @default(now())
+
+  quoteRequests           QuoteRequest[]
+}
+
+// 4. SISTEMA COMERCIAL (CRM, CONSULTAS, COTIZACIONES Y ASESORÍA)
+model CustomerLead {
+  id              String           @id @default(cuid())
+  fullName        String
+  email           String
+  phoneWhatsapp   String
+  country         String
+  city            String?
+  companyName     String?
+  customerType    String           @default("INDIVIDUAL_BUYER") // INDIVIDUAL_BUYER, DEALER, IMPORTER, WORKSHOP
+  leadSource      String           @default("CATALOG_INQUIRY")  // CATALOG_INQUIRY, CALCULATOR_SIMULATION, DIRECT_ADVISORY
+  status          String           @default("NEW")              // NEW, CONTACTED, QUALIFIED, IN_ADVISORY, ARCHIVED
+  targetVehicle   String?          // Criterio comercial: Vehículo buscado (ej: Toyota RAV4, Ford F-150)
+  minYear         Int?             // Criterio comercial: Año mínimo deseado
+  maxBudgetUsd    Float?           // Criterio comercial: Presupuesto total disponible
+  notes           String?
+  consentPrivacy  Boolean          @default(true)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  quoteRequests   QuoteRequest[]
+  advisoryCases   AdvisoryCase[]
+  interactions    CrmInteraction[]
+  presentations   ClientPresentation[]
+
+  @@index([email])
+  @@index([status])
+}
+
+model QuoteRequest {
+  id                  String        @id @default(cuid())
+  referenceCode       String        @unique // COT-2026-XXXX
+  customerLeadId      String
+  customerLead        CustomerLead  @relation(fields: [customerLeadId], references: [id], onDelete: Cascade)
+  auctionLotId        String?
+  auctionLot          AuctionLot?   @relation(fields: [auctionLotId], references: [id], onDelete: SetNull)
+  costEstimateId      String?
+  costEstimate        CostEstimate? @relation(fields: [costEstimateId], references: [id], onDelete: SetNull)
+
+  requestedServices   String        // FULL_IMPORT_ADVISORY, AUCTION_BIDDING_ONLY, INLAND_AND_OCEAN_LOGISTICS, VEHICLE_INSPECTION
+  destinationCountry  String
+  maxBudgetUsd        Float?
+  customerMessage     String?
+  status              String        @default("PENDING_REVIEW") // PENDING_REVIEW, IN_ANALYSIS, ESTIMATE_SENT, CONVERTED_TO_CASE, CLOSED
+  advisorResponseNote String?
+  respondedAt         DateTime?
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+
+  @@index([referenceCode])
+  @@index([status])
+}
+
+model AdvisoryCase {
+  id                    String           @id @default(cuid())
+  caseNumber            String           @unique // EXP-2026-XXXX
+  customerLeadId        String
+  customerLead          CustomerLead     @relation(fields: [customerLeadId], references: [id], onDelete: Cascade)
+  auctionLotId          String?
+  auctionLot            AuctionLot?      @relation(fields: [auctionLotId], references: [id], onDelete: SetNull)
+  assignedAdvisorId     String?
+  assignedAdvisor       User?            @relation(fields: [assignedAdvisorId], references: [id])
+
+  serviceScope          String           // ASESORIA_COMPRA, TRANSPORTE_INTERNO, EXPORTACION_MARITIMA, LLAVE_EN_MANO
+  stage                 String           @default("CONTACTO_INICIAL")
+  // 11 Etapas: CONTACTO_INICIAL, CRITERIOS_DEFINIDOS, BUSQUEDA_DE_VEHICULOS, ALTERNATIVAS_ENVIADAS, VEHICULO_SELECCIONADO, ASESORIA_Y_CONTRATO, OFERTA_AUTORIZADA, SUBASTA_EN_SEGUIMIENTO, RESULTADO_DE_SUBASTA, TRANSPORTE_Y_ENTREGA, OPERACION_CERRADA
+  // Marca especial de seguimiento: CLIENTE_PENSANDO
+  methodology           String           @default("SUBASTA_PRO_USA") // SUBASTA_PRO_USA | MAPA_BROKERS
+  currentStepNumber     Int              @default(1)
+  stepChecklistJson     String           @default("{}") // Checklists completados por paso
+  isThinking            Boolean          @default(false)
+  lastContactAt         DateTime?
+  nextFollowUpAt        DateTime?        // Alerta de seguimiento a los 2-4 días
+  selectedLotNumber     String?
+  idDocumentUrl         String?          // Identificación / licencia del comprador
+  contractSignedUrl     String?          // Contrato o autorización de puja
+  hasCarfaxReport       Boolean          @default(false)
+  carfaxReportUrl       String?          // Vía legítima oficial
+  auctionEvidenceRef    String?          // Comprobante / factura de adjudicación verificable
+  auctionWonPriceUsd    Float?
+  brokerFeeAgreedUsd    Float?           // Tarifa acordada configurable en panel
+  maxAuthorizedBidUsd   Float?
+  verifiedContractReady Boolean          @default(false) // Evita cobros o contrataciones sin proveedor/contrato real verificado
+  operationalNotes      String?
+  destinationCountry    String
+  createdAt             DateTime         @default(now())
+  updatedAt             DateTime         @updatedAt
+
+  interactions          CrmInteraction[]
+  presentations         ClientPresentation[]
+}
+
+model ClientPresentation {
+  id                     String        @id @default(cuid())
+  presentationCode       String        @unique // PRES-2026-XXXXX
+  customerLeadId         String
+  customerLead           CustomerLead  @relation(fields: [customerLeadId], references: [id], onDelete: Cascade)
+  advisoryCaseId         String?
+  advisoryCase           AdvisoryCase? @relation(fields: [advisoryCaseId], references: [id], onDelete: SetNull)
+  title                  String        // Ej: "Propuesta de Alternativas de Subasta"
+  notes                  String?       // Observaciones personalizadas para el cliente
+  selectedLotNumbersJson String        // JSON array con entre 4 y 7 lotes (lotNumber)
+  targetBidMinPercent    Float         @default(40)
+  targetBidMaxPercent    Float         @default(60)
+  advisorName            String?
+  advisorPhone           String?
+  status                 String        @default("ACTIVE") // ACTIVE, ARCHIVED, EXPIRED
+  viewsCount             Int           @default(0)
+  lastViewedAt           DateTime?
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+
+  @@index([presentationCode])
+  @@index([customerLeadId])
+}
+
+model CrmInteraction {
+  id               String        @id @default(cuid())
+  customerLeadId   String
+  customerLead     CustomerLead  @relation(fields: [customerLeadId], references: [id], onDelete: Cascade)
+  advisoryCaseId   String?
+  advisoryCase     AdvisoryCase? @relation(fields: [advisoryCaseId], references: [id], onDelete: SetNull)
+  authorUserId     String?
+  authorUser       User?         @relation(fields: [authorUserId], references: [id])
+  channel          String        // WEB_FORM, WHATSAPP, EMAIL, PHONE_CALL, INTERNAL_NOTE
+  direction        String        @default("INBOUND") // INBOUND | OUTBOUND | INTERNAL
+  subject          String
+  content          String
+  createdAt        DateTime      @default(now())
+}
+
+// 5. USUARIOS, ROLES (RBAC) Y REGISTRO INMUTABLE DE AUDITORÍA
+model User {
+  id                 String             @id @default(cuid())
+  email              String             @unique
+  fullName           String
+  role               String             @default("COMMERCIAL_ADVISOR")
+  // Roles: SUPER_ADMIN, INVENTORY_MANAGER, COMMERCIAL_ADVISOR, AUDITOR_READONLY
+  passwordHash       String
+  mustChangePassword Boolean            @default(true)
+  isActive           Boolean            @default(true)
+  lastLoginAt        DateTime?
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  lotChanges     LotChangeHistory[]
+  advisoryCases  AdvisoryCase[]
+  interactions   CrmInteraction[]
+  auditLogs      AuditLog[]
+}
+
+model AuditLog {
+  id            String   @id @default(cuid())
+  actorUserId   String?
+  actorUser     User?    @relation(fields: [actorUserId], references: [id], onDelete: SetNull)
+  actorRole     String
+  action        String   // Ej. LOT_CREATED, LOT_PRICE_UPDATED, CSV_BATCH_IMPORTED, TARIFF_UPDATED, LEAD_STATUS_CHANGED
+  module        String   // INGESTION, VEHICLES, CALCULATOR, CRM, ADMIN_SECURITY
+  targetType    String   // AuctionLot, TariffRuleSet, QuoteRequest, AdvisoryCase, SystemConfig
+  targetId      String?
+  detailsJson   String   // JSON con metadatos auditables de la operación
+  ipAddress     String   @default("127.0.0.1")
+  createdAt     DateTime @default(now())
+
+  @@index([module, createdAt])
+  @@index([targetType, targetId])
+}
+

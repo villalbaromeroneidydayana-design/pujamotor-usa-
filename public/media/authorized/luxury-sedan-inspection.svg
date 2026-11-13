@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="bg_pm_luxury" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#05080f"/>
+      <stop offset="50%" stop-color="#0c121e"/>
+      <stop offset="100%" stop-color="#141a29"/>
+    </linearGradient>
+    <pattern id="grid_pm_luxury" width="36" height="36" patternUnits="userSpaceOnUse">
+      <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#1e293b" stroke-width="0.7" stroke-dasharray="2,2"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg_pm_luxury)"/>
+  <rect width="800" height="500" fill="url(#grid_pm_luxury)"/>
+  
+  <!-- Header Badge PUJAMOTOR USA -->
+  <rect x="30" y="25" width="440" height="34" rx="6" fill="#0b1b2b" stroke="#00F2FE" stroke-width="1.2"/>
+  <circle cx="48" cy="42" r="5" fill="#00F2FE"/>
+  <text x="62" y="47" fill="#E2E8F0" font-family="monospace" font-size="12" font-weight="bold" letter-spacing="1">PUJAMOTOR USA // FICHA TÉCNICA — VEHÍCULOS DE LUJO</text>
+  
+  <!-- Silhouette: Luxury Coupe / Sedan (BMW / Mercedes Profile) -->
+  <g transform="translate(90, 150)" stroke="#00F2FE" stroke-width="2.5" fill="#080e18" fill-opacity="0.9">
+    <!-- Streamlined Luxury Body Line -->
+    <path d="M35,142 C38,110 65,92 120,86 L230,82 C285,42 350,30 460,30 C515,30 550,55 575,82 L605,92 C625,102 625,120 625,142 Z"/>
+    <!-- Sleek Frameless Windows -->
+    <path d="M245,45 L380,45 L380,80 L180,80 Z" fill="#14243b" stroke="#38BDF8" stroke-width="1.5"/>
+    <path d="M392,45 L475,45 C510,55 530,70 545,80 L392,80 Z" fill="#14243b" stroke="#38BDF8" stroke-width="1.5"/>
+    
+    <!-- Sport Luxury Alloy Wheels -->
+    <circle cx="150" cy="148" r="44" fill="#06090e" stroke="#00F2FE" stroke-width="3"/>
+    <circle cx="150" cy="148" r="30" fill="#1e293b" stroke="#94a3b8" stroke-width="1.5"/>
+    <!-- M-Sport Style Caliper -->
+    <rect x="140" y="128" width="9" height="20" rx="2" fill="#FF7A00" stroke="none"/>
+    <circle cx="150" cy="148" r="14" fill="#00F2FE"/>
+    
+    <circle cx="510" cy="148" r="44" fill="#06090e" stroke="#00F2FE" stroke-width="3"/>
+    <circle cx="510" cy="148" r="30" fill="#1e293b" stroke="#94a3b8" stroke-width="1.5"/>
+    <rect x="500" y="128" width="9" height="20" rx="2" fill="#FF7A00" stroke="none"/>
+    <circle cx="510" cy="148" r="14" fill="#00F2FE"/>
+  </g>
+
+  <!-- Inspection Points Callout -->
+  <line x1="280" y1="210" x2="330" y2="155" stroke="#FF7A00" stroke-width="1.5" stroke-dasharray="3,3"/>
+  <circle cx="280" cy="210" r="4" fill="#FF7A00"/>
+  <rect x="290" y="140" width="165" height="24" rx="4" fill="#1e1810" stroke="#FF7A00" stroke-width="1"/>
+  <text x="300" y="156" fill="#FFB775" font-family="monospace" font-size="10" font-weight="bold">CONFORT Y SISTEMA MULTIMEDIA</text>
+
+  <!-- Footer Legal Watermark -->
+  <rect x="30" y="435" width="740" height="40" rx="6" fill="#06090e" stroke="#1e293b"/>
+  <text x="45" y="460" fill="#94A3B8" font-family="monospace" font-size="11">ORIGEN DE IMAGEN: ACTIVO TÉCNICO AUTORIZADO PUJAMOTOR USA (INSPECCIÓN VISUAL HOMOLOGADA)</text>
+</svg>
