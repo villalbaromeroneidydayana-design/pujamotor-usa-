@@ -87,27 +87,24 @@ export const CORPORATE_IDENTITY: CorporateIdentityConfig = {
   },
 
   domain: {
-    hostname: process.env.NEXT_PUBLIC_SITE_HOSTNAME || "pujamotorusa.com",
-    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://pujamotorusa.com",
+    hostname: process.env.NEXT_PUBLIC_SITE_HOSTNAME || "pujamotor-usa-b6ep.vercel.app",
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://pujamotor-usa-b6ep.vercel.app",
   },
 
   telephones: {
-    // PREPARADO: Ingrese aquí los teléfonos corporativos oficiales al contratarlos.
-    // Dejar en null para no mostrar números ficticios al público.
-    mainPhone: process.env.NEXT_PUBLIC_PHONE_MAIN || null,
-    mainPhoneFormatted: process.env.NEXT_PUBLIC_PHONE_MAIN_FORMATTED || null,
-    whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || null,
-    whatsappRaw: process.env.NEXT_PUBLIC_WHATSAPP_RAW || null,
+    mainPhone: process.env.NEXT_PUBLIC_PHONE_MAIN || "+19295909116",
+    mainPhoneFormatted: process.env.NEXT_PUBLIC_PHONE_MAIN_FORMATTED || "+1 (929) 590-9116",
+    whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "19295909116",
+    whatsappRaw: process.env.NEXT_PUBLIC_WHATSAPP_RAW || "19295909116",
     secondaryPhone: process.env.NEXT_PUBLIC_PHONE_SECONDARY || null,
     secondaryPhoneFormatted: process.env.NEXT_PUBLIC_PHONE_SECONDARY_FORMATTED || null,
   },
 
   emails: {
-    // PREPARADO: Ingrese aquí los correos corporativos asociados a su dominio.
-    generalInfo: process.env.NEXT_PUBLIC_EMAIL_INFO || null,
-    sales: process.env.NEXT_PUBLIC_EMAIL_SALES || null,
-    support: process.env.NEXT_PUBLIC_EMAIL_SUPPORT || null,
-    legal: process.env.NEXT_PUBLIC_EMAIL_LEGAL || null,
+    generalInfo: process.env.NEXT_PUBLIC_EMAIL_INFO || "richardbejarano52@gmail.com",
+    sales: process.env.NEXT_PUBLIC_EMAIL_SALES || "richardbejarano52@gmail.com",
+    support: process.env.NEXT_PUBLIC_EMAIL_SUPPORT || "richardbejarano52@gmail.com",
+    legal: process.env.NEXT_PUBLIC_EMAIL_LEGAL || "richardbejarano52@gmail.com",
   },
 
   businessHours: {
@@ -120,7 +117,7 @@ export const CORPORATE_IDENTITY: CorporateIdentityConfig = {
   },
 
   socialMedia: {
-    facebookUrl: process.env.NEXT_PUBLIC_FACEBOOK_URL || null,
+    facebookUrl: process.env.NEXT_PUBLIC_FACEBOOK_URL || "https://www.facebook.com/profile.php?id=61573887208886",
     instagramUrl: process.env.NEXT_PUBLIC_INSTAGRAM_URL || null,
     youtubeUrl: process.env.NEXT_PUBLIC_YOUTUBE_URL || null,
   },

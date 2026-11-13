@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { ensureSystemBootstrapped } from "@/shared/db/bootstrap";
 import { catalogService } from "@/modules/catalog/catalog.service";
+import { FALLBACK_REAL_LOTS } from "@/modules/catalog/fallback-real-inventory";
 import { CompletenessBadge, EnvironmentBadge } from "@/components/DataBadges";
 import { LotInteractiveActions } from "@/components/LotInteractiveActions";
 import { LotImageGallery } from "@/components/LotImageGallery";
@@ -30,10 +31,21 @@ export default async function LotDetailPage({
 }: {
   params: Promise<{ lotNumber: string }>;
 }) {
-  await ensureSystemBootstrapped();
   const resolvedParams = await params;
   const decodedLotNumber = decodeURIComponent(resolvedParams.lotNumber);
-  const lot = await catalogService.getLotDetailByNumber(decodedLotNumber);
+
+  let lot: any = null;
+  try {
+    await ensureSystemBootstrapped();
+    lot = await catalogService.getLotDetailByNumber(decodedLotNumber);
+  } catch {
+    // Entorno serverless sin DB conectada: buscar en inventario real
+  }
+
+  if (!lot) {
+    const rawNumber = decodedLotNumber.replace(/^DEMO-|^REAL-TEST-/, "");
+    lot = FALLBACK_REAL_LOTS.find((l) => l.lotNumber === decodedLotNumber || l.lotNumber === rawNumber) || null;
+  }
 
   if (!lot) {
     notFound();

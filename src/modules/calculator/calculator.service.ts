@@ -206,41 +206,56 @@ export const LEGAL_ESTIMATE_DISCLAIMER =
 
 export class CalculatorService {
   async ensureActiveTariffRuleSet() {
-    const existing = await prisma.tariffRuleSet.findFirst({
-      where: { isActive: true },
-      orderBy: { updatedAt: "desc" },
-    });
+    try {
+      const existing = await prisma.tariffRuleSet.findFirst({
+        where: { isActive: true },
+        orderBy: { updatedAt: "desc" },
+      });
 
-    if (existing) {
+      if (existing) {
+        return {
+          record: existing,
+          rules: this.parseTariffRecord(existing),
+        };
+      }
+
+      const created = await prisma.tariffRuleSet.create({
+        data: {
+          versionCode: "TARIFARIO-2026-OFICIAL-V1",
+          name: "Matriz Tarifaria Estándar Subastas EE. UU. y Logística Internacional 2026",
+          description: "Escalas parametrizables de Buyer Fees, Broker, Grúa Interna, Flete Marítimo y Aduanas por destino.",
+          isActive: true,
+          auctionFeeScheduleJson: JSON.stringify({
+            tiers: DEFAULT_TARIFF_RULES.auctionFeeTiers,
+            gateFeeUsd: DEFAULT_TARIFF_RULES.gateFeeUsd,
+            environmentalFeeUsd: DEFAULT_TARIFF_RULES.environmentalFeeUsd,
+            titleMailingFeeUsd: DEFAULT_TARIFF_RULES.titleMailingFeeUsd,
+          }),
+          brokerFeeRulesJson: JSON.stringify(DEFAULT_TARIFF_RULES.brokerFeeRules),
+          inlandTransportMatrixJson: JSON.stringify(DEFAULT_TARIFF_RULES.inlandTransportMatrix),
+          oceanFreightRatesJson: JSON.stringify(DEFAULT_TARIFF_RULES.oceanFreightRates),
+          destinationCustomsRulesJson: JSON.stringify(DEFAULT_TARIFF_RULES.destinationCustomsRules),
+        },
+      });
+
       return {
-        record: existing,
-        rules: this.parseTariffRecord(existing),
+        record: created,
+        rules: DEFAULT_TARIFF_RULES,
+      };
+    } catch {
+      return {
+        record: {
+          id: "default-rule-set",
+          versionCode: "TARIFARIO-2026-OFICIAL-V1",
+          name: "Matriz Tarifaria Estándar Subastas EE. UU. y Logística Internacional 2026",
+          description: "Escalas parametrizables oficiales",
+          isActive: true,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        } as any,
+        rules: DEFAULT_TARIFF_RULES,
       };
     }
-
-    const created = await prisma.tariffRuleSet.create({
-      data: {
-        versionCode: "TARIFARIO-2026-OFICIAL-V1",
-        name: "Matriz Tarifaria Estándar Subastas EE. UU. y Logística Internacional 2026",
-        description: "Escalas parametrizables de Buyer Fees, Broker, Grúa Interna, Flete Marítimo y Aduanas por destino.",
-        isActive: true,
-        auctionFeeScheduleJson: JSON.stringify({
-          tiers: DEFAULT_TARIFF_RULES.auctionFeeTiers,
-          gateFeeUsd: DEFAULT_TARIFF_RULES.gateFeeUsd,
-          environmentalFeeUsd: DEFAULT_TARIFF_RULES.environmentalFeeUsd,
-          titleMailingFeeUsd: DEFAULT_TARIFF_RULES.titleMailingFeeUsd,
-        }),
-        brokerFeeRulesJson: JSON.stringify(DEFAULT_TARIFF_RULES.brokerFeeRules),
-        inlandTransportMatrixJson: JSON.stringify(DEFAULT_TARIFF_RULES.inlandTransportMatrix),
-        oceanFreightRatesJson: JSON.stringify(DEFAULT_TARIFF_RULES.oceanFreightRates),
-        destinationCustomsRulesJson: JSON.stringify(DEFAULT_TARIFF_RULES.destinationCustomsRules),
-      },
-    });
-
-    return {
-      record: created,
-      rules: DEFAULT_TARIFF_RULES,
-    };
   }
 
   private parseTariffRecord(record: {
