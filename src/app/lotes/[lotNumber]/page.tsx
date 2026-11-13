@@ -151,7 +151,7 @@ export default async function LotDetailPage({
                   Control de Calidad del Motor Central — Atributos Pendientes de Confirmar
                 </h3>
                 <ul className="list-disc pl-5 text-xs text-orange-200/90 space-y-1">
-                  {lot.missingFields.map((field) => (
+                  {lot.missingFields.map((field: string) => (
                     <li key={field}>{field}</li>
                   ))}
                 </ul>
@@ -286,7 +286,7 @@ export default async function LotDetailPage({
               </div>
 
               <div className="space-y-2.5">
-                {lot.changeHistory.map((entry) => (
+                {lot.changeHistory.map((entry: any) => (
                   <div
                     key={entry.id}
                     className="rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-3 text-xs space-y-1"
